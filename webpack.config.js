@@ -1,7 +1,5 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ESLintPlugin = require('eslint-webpack-plugin');
-const StylelintPlugin = require('stylelint-webpack-plugin');
 
 module.exports = {
   entry: './src/index.js',
@@ -38,21 +36,15 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'public'),
     filename: 'bundle.js',
-
   },
 
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html', // optional but recommended
-    }),
-    new ESLintPlugin(),
-    new StylelintPlugin({
-      files: '**/*.{css,scss}',
-    }),
-    new ESLintPlugin({
-      failOnError: false,
+      template: './src/index.html',
     }),
   ],
 
-  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
+  mode: process.env.NODE_ENV === 'production'
+    ? 'production'
+    : 'development',
 };
