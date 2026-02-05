@@ -46,6 +46,7 @@ class Task {
     this.root.appendChild(this.list);
 
     this.clearButton = document.createElement('button');
+    this.clearButton.type = 'button';
     this.clearButton.textContent = 'Clear all completed';
     this.clearButton.classList.add('clear-button');
     this.root.appendChild(this.clearButton);
@@ -56,7 +57,7 @@ class Task {
       id: Date.now(),
       description,
       completed: false,
-      index: this.tasks.length,
+      index: this.tasks.length + 1,
     };
     this.tasks.push(task);
     this.save();
@@ -120,12 +121,16 @@ class Task {
       listItem.appendChild(group);
 
       const itemMenu = document.createElement('span');
+      itemMenu.type = 'button';
       itemMenu.innerHTML = '&#128465;';
       itemMenu.classList.add('item-menu');
-      itemMenu.style.cursor = 'pointer';
+      itemMenu.classList.add('item-menu', 'clickable');
       itemMenu.title = 'Delete task';
       itemMenu.addEventListener('click', () => {
         this.tasks = this.tasks.filter((t) => t.id !== taskItem.id);
+        this.tasks.forEach((task, i) => {
+          task.index = i + 1;
+        });
         this.save();
         this.renderTasks();
       });
